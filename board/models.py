@@ -10,6 +10,10 @@ class Platform(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Платформа'
+        verbose_name_plural = 'Платформы'
+
 
 class ContentType(models.Model):
     name = models.CharField('Тип контента', max_length=50)
@@ -17,12 +21,20 @@ class ContentType(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Тип контента'
+        verbose_name_plural = 'Тип контента'
+
 
 class AdvertCategory(models.Model):
     name = models.CharField('Категория', max_length=20)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
 
 class Advert(models.Model):
@@ -41,5 +53,5 @@ class Advert(models.Model):
     )
 
     class Meta:
-        verbose_name_plural = 'Обьявления'
         verbose_name = 'Обьявление'
+        verbose_name_plural = 'Обьявления'
