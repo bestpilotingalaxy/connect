@@ -1,0 +1,18 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}
+    <h1>{{ advert.title }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2>{{ advert.platform.name }}</h2>
+        <h2>{{ advert.advert_category }}</h2>
+        <h2>{{ advert.content_type }}</h2>
+    </div>
+    <div>
+        <p>{{ advert.content }}</p>
+    </div>
+    <h2>{{ advert.price }}</h2>
+    <p>{{ advert.published }}</p>
+{% endblock %}

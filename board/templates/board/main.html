@@ -3,7 +3,7 @@
 {% block content %}
     {% for advert in adverts %}
         <div class="advert">
-            <h2>{{ advert.title }}</h2>
+            <h2><a href="{% url 'detail' pk=advert.pk %}">{{ advert.title }}</a></h2>
             <p>{{ advert.content }}</p>
             <p>{{ advert.advert_category }}</p>
             <p>{{ advert.price }}</p>
