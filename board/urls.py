@@ -10,4 +10,6 @@ urlpatterns = [
          views.AdvertAddView.as_view(), name='add'),
     path('detail/<int:pk>/',
          views.AdvertDetailView.as_view(), name='detail'),
+    path('update/<int:pk>/',
+         views.AdvertUpdateView.as_view(), name='update')
 ]

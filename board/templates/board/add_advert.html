@@ -1,11 +1,10 @@
 {% extends 'layout/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-
     <h2>Добавление обьявления</h2>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Опубликовать">
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Опубликовать</button>
     </form>
 {% endblock %}
