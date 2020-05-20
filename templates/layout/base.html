@@ -14,19 +14,38 @@
 <body>
 <h5>
     {% block page_title %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="{% url 'main' %}">Home <span class="sr-only">(current)</span></a>
-                    {% for platform in platforms %}
-                        <a class="nav-item nav-link" href="{% url 'by_platform' platform.name %}">{{ platform.name }}</a>
-                    {% endfor %}
+                  <a class="nav-item nav-link active" href="{% url 'main' %}">Home <span class="sr-only">(current)</span></a>
                 </div>
+                    <div class="navbar-nav mx-auto">
+                      {% for platform in platforms %}
+                        <a class="nav-item nav-link" href="{% url 'by_platform' platform.name %}">{{ platform.name }}</a>
+                      {% endfor %}
+                    </div>
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="{% url 'add' %}">Add</a>
+                    <a class="nav-item nav-link ml-auto" href="{% url 'add' %}">Add</a>
+                </div>
+                <div class="">
+                    {% if user.is_authenticated %}
+                    <a class="border-success">{{ user.username }}</a>
+                    {% endif %}
+                </div>
+
+                <div class="navbar-nav">
+                  {% if user.is_authenticated %}
+                    <button type="button" class="btn btn-primary">
+                      <a  class="nav-item nav-link ml-auto" href="{% url 'account_logout' %}">Log out</a>
+                    </button>
+                  {% else %}
+                    <button type="button" class="btn btn-primary">
+                      <a  class="nav-item nav-link ml-auto" href="{% url 'account_login' %}">Log in</a>
+                    </button>
+                  {% endif %}
                 </div>
             </div>
         </nav>

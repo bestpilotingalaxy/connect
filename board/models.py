@@ -6,6 +6,7 @@ from django.db import models
 
 class Platform(models.Model):
     name = models.CharField('Платформа', max_length=20)
+    img = models.ImageField('Изображение', upload_to='platform', null=True)
 
     def __str__(self):
         return self.name
