@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.vk',
     'allauth.socialaccount.providers.instagram',
     'allauth.socialaccount.providers.google',
+    'bootstrap_pagination',
 ]
 
 SITE_ID = 1

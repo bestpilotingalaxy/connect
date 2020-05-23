@@ -23,7 +23,7 @@
                   <a class="nav-item nav-link active" href="{% url 'main' %}">Home <span class="sr-only">(current)</span></a>
                 </div>
                     <div class="navbar-nav mx-auto">
-                      {% for platform in platforms %}
+                      {% for platform in view.get_platforms %}
                         <a class="nav-item nav-link" href="{% url 'by_platform' platform.name %}">{{ platform.name }}</a>
                       {% endfor %}
                     </div>

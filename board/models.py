@@ -1,9 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
-
-
 class Platform(models.Model):
     name = models.CharField('Платформа', max_length=20)
     img = models.ImageField('Изображение', upload_to='platform', null=True)
@@ -41,7 +38,7 @@ class AdvertCategory(models.Model):
 class Advert(models.Model):
     title = models.CharField('Заголовок', max_length=30, db_index=True)
     content = models.TextField('Описание', max_length=200)
-    price = models.FloatField('Цена', null=True, blank=True)
+    price = models.IntegerField('Цена',  null=True, blank=True)
     published = models.DateTimeField('Опубликовано', auto_now_add=True)
     platform = models.ForeignKey(
         Platform, verbose_name='Платформа', on_delete=models.PROTECT
