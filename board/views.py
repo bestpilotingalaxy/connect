@@ -30,6 +30,7 @@ class AdvertList(ExtraContextFuncs, ListView):
 class AdvertByPlatformView(ExtraContextFuncs, ListView):
     template_name = 'board/main.html'
     context_object_name = 'adverts'
+    paginate_by = 5
 
     def get_queryset(self):
         return Advert.objects.filter(platform__name=self.kwargs['platform_name'])
@@ -47,16 +48,13 @@ class AdvertUpdateView(ExtraContextFuncs, UpdateView):
     model = Advert
     form_class = AdvertForm
     template_name = 'board/advert_update.html'
-    success_url = '/board/'
+    # success_url = '/board/'
 
     # Переопределить метод для редиректа на by_platform() платформы конкретной записи
     # Не получается достать из object записи имя платформы
 
-    # def get_success_url(self):
-    #     return reverse(
-    #         'board:by_platform',
-    #         kwargs={'platform': self.model.platform}
-    #     )
+    def get_success_url(self):
+        return reverse('detail', kwargs={'pk': self.kwargs.get('pk')})
 
 
 class AdvertDeleteView(ExtraContextFuncs, DeleteView):

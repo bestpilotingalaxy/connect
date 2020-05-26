@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'board.apps.BoardConfig',
+    'profiles.apps.ProfilesConfig',
     'crispy_forms',
     'allauth',
     'allauth.account',
@@ -52,6 +53,8 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 ACCOUNT_LOGOUT_REDIRECT_URL = '/board'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
