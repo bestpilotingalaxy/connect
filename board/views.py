@@ -1,14 +1,17 @@
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.db.models import Q
-from django.views.generic.edit import UpdateView, DeleteView, CreateView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView, View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 
-from .models import Advert, Platform, ContentType, AdvertCategory
-from .forms import AdvertForm
+from .models import Advert, Platform, ContentType, AdvertCategory, Review, UserProfile
+from .forms import AdvertForm, ReviewForm
 
 
-class ExtraContextFuncs:
+class ExtraContextMixin:
 
     def get_advert_category(self):
         return AdvertCategory.objects.all()
@@ -20,23 +23,24 @@ class ExtraContextFuncs:
         return Platform.objects.all()
 
 
-class AdvertList(ExtraContextFuncs, ListView):
+class AdvertList(ExtraContextMixin, ListView):
     model = Advert
     context_object_name = 'adverts'
     template_name = 'board/main.html'
     paginate_by = 5
 
 
-class AdvertByPlatformView(ExtraContextFuncs, ListView):
+class AdvertByPlatformView(ExtraContextMixin, ListView):
     template_name = 'board/main.html'
     context_object_name = 'adverts'
     paginate_by = 5
 
     def get_queryset(self):
-        return Advert.objects.filter(platform__name=self.kwargs['platform_name'])
+        return Advert.objects.filter(
+            platform__name=self.kwargs['platform_name'])
 
 
-class AdvertAddView(ExtraContextFuncs, CreateView):
+class AdvertAddView(ExtraContextMixin, CreateView):
     """Form view to add new advert object"""
     template_name = 'board/add_advert.html'
     model = Advert
@@ -44,20 +48,17 @@ class AdvertAddView(ExtraContextFuncs, CreateView):
     success_url = '/board'
 
 
-class AdvertUpdateView(ExtraContextFuncs, UpdateView):
+class AdvertUpdateView(ExtraContextMixin, UpdateView):
     model = Advert
     form_class = AdvertForm
     template_name = 'board/advert_update.html'
     # success_url = '/board/'
 
-    # Переопределить метод для редиректа на by_platform() платформы конкретной записи
-    # Не получается достать из object записи имя платформы
-
     def get_success_url(self):
         return reverse('detail', kwargs={'pk': self.kwargs.get('pk')})
 
 
-class AdvertDeleteView(ExtraContextFuncs, DeleteView):
+class AdvertDeleteView(ExtraContextMixin, DeleteView):
     """Form view to delete advert"""
     model = Advert
     success_url = '/board'
@@ -68,8 +69,12 @@ class AdvertDetailView(DetailView):
     model = Advert
     template_name = 'board/advert_detail.html'
 
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data()
+    #     context['reviews'] = Review.objects.filter()
 
-class FilterAdvertsView(ExtraContextFuncs, ListView):
+
+class FilterAdvertsView(ExtraContextMixin, ListView):
     """Adverts filter by 2 parameters"""
     template_name = 'board/main.html'
     context_object_name = 'adverts'
@@ -96,9 +101,26 @@ class Search(ListView):
     context_object_name = 'adverts'
 
     def get_queryset(self):
-        return Advert.objects.filter(title__icontains=self.request.GET.get('search'))
+        return Advert.objects.filter(
+            title__icontains=self.request.GET.get('search'))
 
     # def get_context_data(self, *args, **kwargs):
     #     context = super().get_context_data()
     #     context['search'] = self.request.GET.get('search')
     #     return context
+
+
+class AddReview(LoginRequiredMixin, View):
+    """Add review 'post method' based controller"""
+    login_url = 'account_login'
+
+    def post(self, request, *args, **kwargs):
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+        return redirect('detail', pk=kwargs['pk'])
+
+    def get(self, request, *args, **kwargs):
+
+        return redirect('detail', pk=kwargs['pk'])

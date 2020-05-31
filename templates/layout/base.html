@@ -32,19 +32,25 @@
                 </div>
                 <div class="">
                     {% if user.is_authenticated %}
-                    <a class="border-success">{{ user.username }}</a>
+                    <a class="border-success" href="{% url 'profile' user.id %}">{{ user.username }}</a>
                     {% endif %}
                 </div>
 
                 <div class="navbar-nav">
                   {% if user.is_authenticated %}
-                    <button type="button" class="btn btn-primary">
-                      <a  class="nav-item nav-link ml-auto" href="{% url 'account_logout' %}">Log out</a>
-                    </button>
+                      <form method="post" action="{% url 'account_logout' %}">
+                          {% csrf_token %}
+                          {% if redirect_field_value %}
+                              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                          {% endif %}
+                          <button type="submit" class="btn btn-primary">
+                              <a  class="nav-item nav-link ml-auto">Log out</a>
+                          </button>
+                      </form>
                   {% else %}
-                    <button type="button" class="btn btn-primary">
-                      <a  class="nav-item nav-link ml-auto" href="{% url 'account_login' %}">Log in</a>
-                    </button>
+                      <button type="button" class="btn btn-primary">
+                          <a  class="nav-item nav-link ml-auto" href="{% url 'account_login' %}">Log in</a>
+                      </button>
                   {% endif %}
                 </div>
             </div>

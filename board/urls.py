@@ -11,6 +11,9 @@ urlpatterns = [
     path('search/',
          views.Search.as_view(), name='search'),
 
+    path('review/<int:pk>/',
+         views.AddReview.as_view(), name='add_review'),
+
     path('<str:platform_name>/',
          views.AdvertByPlatformView.as_view(), name='by_platform'),
 

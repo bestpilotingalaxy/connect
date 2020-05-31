@@ -1,9 +1,12 @@
 {% extends 'layout/base.html' %}
-
-
+{% load account %}
+{% load static %}
 
 {% block content %}
 
-    {{ profile }}
-
+    {{ profile.user }}
+    <p>{% user_display user %}</p>
+    <img src="{% url  %}" alt="">
+    <p>{{ profile.messenger }}</p>
+    <img src="/media/messengers/telegram-app.png" alt="">
 {% endblock %}

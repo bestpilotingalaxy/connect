@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.instagram',
     'allauth.socialaccount.providers.google',
     'bootstrap_pagination',
+    'phone_field',
 ]
 
 SITE_ID = 1

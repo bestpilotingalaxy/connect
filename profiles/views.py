@@ -19,5 +19,3 @@ class ProfileUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('profile', kwargs={'pk': self.kwargs.get('pk')})
-
-

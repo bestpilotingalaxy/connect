@@ -8,9 +8,23 @@ from .models import UserProfile
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields = (
+            'username',
+            'email',
+            'avatar',
+            'nickname',
+            'first_name',
+            'last_name',
+            'about',
+            'messenger',
+            'contact_phone',
+            'contact_link'
+        )
         help_texts = {
-            'social_link': 'Ссылка или номер для связи с вами'
+            'contact_phone': 'Номер телефона',
+            'social_link': 'Ссылка для связи с вами',
+            'first_name': 'Имя',
+            'last_name': 'Фамилия'
         }
 
     def __init__(self, *args, **kwargs):

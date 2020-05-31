@@ -2,9 +2,10 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load crispy_forms_field %}
-
+{% load account %}
 
 {% block content %}
 
     {% crispy form %}
+    {% user_display user %}
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
-
 {% block title %}
+{% load account %}
     <h1>{{ advert.title }}</h1>
 {% endblock %}
 
@@ -16,4 +16,20 @@
     <h2>{{ advert.price }}</h2>
     <p>{{ advert.published }}</p>
     <a href="{% url 'update' pk=advert.id %}"><input type="button" value="Изменить"></a>
+    <form class="mt-4" method="post" action="{% url 'add_review' advert.pk %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Example textarea</label>
+            <input hidden="" value="{{ user.pk }}" name="user">
+            <input hidden="" value="{{ advert.pk }}" name="advert">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="text"></textarea>
+
+        </div>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Оставить отзыв</button>
+    </form>
+    <div>
+    {% for review in advert.review  %}
+        <p>{{ review }}</p>
+    {% endfor %}
+    </div>
 {% endblock %}

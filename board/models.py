@@ -1,4 +1,5 @@
 from django.db import models
+from profiles.models import UserProfile
 
 
 class Platform(models.Model):
@@ -36,20 +37,54 @@ class AdvertCategory(models.Model):
 
 
 class Advert(models.Model):
+    user = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    platform = models.ForeignKey(
+        Platform,
+        verbose_name='Платформа',
+        on_delete=models.PROTECT
+    )
+    content_type = models.ForeignKey(
+        ContentType,
+        verbose_name='Тип контента',
+        on_delete=models.PROTECT
+    )
+    advert_category = models.ForeignKey(
+        AdvertCategory,
+        verbose_name='Категория',
+        on_delete=models.PROTECT
+    )
     title = models.CharField('Заголовок', max_length=30, db_index=True)
     content = models.TextField('Описание', max_length=200)
     price = models.IntegerField('Цена',  null=True, blank=True)
     published = models.DateTimeField('Опубликовано', auto_now_add=True)
-    platform = models.ForeignKey(
-        Platform, verbose_name='Платформа', on_delete=models.PROTECT
-    )
-    content_type = models.ForeignKey(
-        ContentType, verbose_name='Тип контента', on_delete=models.PROTECT
-    )
-    advert_category = models.ForeignKey(
-        AdvertCategory, verbose_name='Категория', on_delete=models.PROTECT
-    )
 
     class Meta:
         verbose_name = 'Обьявление'
         verbose_name_plural = 'Обьявления'
+
+
+class Review(models.Model):
+    advert = models.ForeignKey(
+        Advert,
+        on_delete=models.CASCADE,
+        verbose_name='Отзыв'
+    )
+    user = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    text = models.TextField('Текст отзыва', max_length=1000)
+    published = models.DateTimeField('Опубликовано', auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} - {self.advert}"
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        ordering = ['published']
