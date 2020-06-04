@@ -5,18 +5,72 @@
 {% endblock %}
 
 {% block content %}
-    <div>
-        <h2>{{ advert.platform.name }}</h2>
-        <h2>{{ advert.advert_category }}</h2>
-        <h2>{{ advert.content_type }}</h2>
+<div class="container mx-auto mt-5">
+    <h2 class="text-center ">{{ advert.title }}</h2>
+</div>
+<div class="row pt-5">
+    <div class="col-sm-3 mr-auto border">
     </div>
-    <div>
-        <p>{{ advert.content }}</p>
+    <div class="col-sm-6 mr-auto border bg-light">
+        <div class="card mb-1 bg-dark text-white mx-auto" style="max-height: 120px;">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="{{ advert.user.avatar.url }} }" class="card-img" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                            <h5 class="card-title">{{ advert.user.nickname }}</h5>
+                        <p class="card-text"> This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="container pt-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col bg-dark text-white">
+                            <h4 class="text-center mt-2 ">Платформа</h4>
+                        </div>
+                        <div class="col bg-dark text-white">
+                            <h4 class="text-center mt-2 ">Интересует</h4>
+                        </div>
+                        <div class="col bg-dark text-white">
+                            <h4 class="text-center mt-2 ">Тип контента</h4>
+                        </div>
+                        <div class="col bg-dark text-white">
+                            <h4 class="text-center mt-2 ">Цена</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col border">
+                            <h5 class="text-center mt-2"> {{ advert.platform }}</h5>
+                        </div>
+                        <div class="col border">
+                            <h5 class="text-center mt-1">{{ advert.advert_category }}</h5>
+                        </div>
+                        <div class="col border">
+                            <h5 class="text-center mt-1">{{ advert.content_type }}</h5>
+                        </div>
+                        <div class="col border">
+                            <h5 class="text-center mt-1">{{ advert.price }}</h5>
+                        </div>
+                    </div>
+                    <p class="lead mt-5 pt-5">{{ advert.content }}</p>
+                <h5 class="display-9 col-sm-4 mt-5 pt-5 ml-auto">{{ advert.published }}</h5>
+            </div>
+
     </div>
-    <h2>{{ advert.price }}</h2>
-    <p>{{ advert.published }}</p>
+    </div>
+    <div class="col-sm-3 mr-auto border">
+    </div>
+
+
     <a href="{% url 'update' pk=advert.id %}"><input type="button" value="Изменить"></a>
-    <form class="mt-4" method="post" action="{% url 'add_review' advert.pk %}">
+
+   <div class="col-sm-4 mx-auto">
+        <form class="mt-4" method="post" action="{% url 'add_review' advert.pk %}">
         {% csrf_token %}
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Example textarea</label>
@@ -28,8 +82,15 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Оставить отзыв</button>
     </form>
     <div>
-    {% for review in advert.review  %}
-        <p>{{ review }}</p>
+    {% for review in reviews  %}
+        <div class="media border mt-5">
+            <img src="{{ review.user.avatar.url }}" width="64" height="64" class="mr-3 border" alt="...">
+            <div class="media-body">
+                <h5 class="mt-0">{{ review.user.nickname }}</h5>
+                {{ review.text }}
+            </div>
+        </div>
     {% endfor %}
     </div>
+</div>
 {% endblock %}

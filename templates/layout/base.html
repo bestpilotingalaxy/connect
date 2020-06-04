@@ -11,41 +11,56 @@
     <title>{% block title %}
     {% endblock %}</title>
 </head>
+{% load static %}
+<style type="text/css">
+    .bg-img{
+        background-image: url("/media/main_template/4KARXV.jpg");
+        height: 250px;
+    }
+</style>
+
 <body>
 <h5>
     {% block page_title %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="shadow-lg navbar navbar-expand-lg navbar-dark bg-dark">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                  <a class="nav-item nav-link active" href="{% url 'main' %}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active" href="{% url 'main' %}">Home <span class="sr-only">(current)</span></a>
                 </div>
                     <div class="navbar-nav mx-auto">
-                      {% for platform in view.get_platforms %}
-                        <a class="nav-item nav-link" href="{% url 'by_platform' platform.name %}">{{ platform.name }}</a>
-                      {% endfor %}
+                        {% for platform in view.get_platforms %}
+                            <a class="nav-item nav-link" href="{% url 'by_platform' platform.name %}">
+                                <img src="{{ platform.img.url }}" width="30" height="30" alt="">
+                            </a>
+                        {% endfor %}
                     </div>
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link ml-auto" href="{% url 'add' %}">Add</a>
+                    <a class="nav-item nav-link mr-auto" href="{% url 'add' %}">Add</a>
                 </div>
                 <div class="">
                     {% if user.is_authenticated %}
-                    <a class="border-success" href="{% url 'profile' user.id %}">{{ user.username }}</a>
+                        <a>
+                            <img src="{{ user.profile.avatar.url }}" width="50" height="50" alt="">
+                        </a>
+                        <a class="border-success" href="{% url 'profile' user.id %}">{{ user.username }}</a>
                     {% endif %}
                 </div>
 
                 <div class="navbar-nav">
                   {% if user.is_authenticated %}
                       <form method="post" action="{% url 'account_logout' %}">
+                          <div class="container">
                           {% csrf_token %}
                           {% if redirect_field_value %}
                               <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
                           {% endif %}
-                          <button type="submit" class="btn btn-primary">
+                          <button type="submit" class="btn btn-danger">
                               <a  class="nav-item nav-link ml-auto">Log out</a>
                           </button>
+                          </div>
                       </form>
                   {% else %}
                       <button type="button" class="btn btn-primary">
@@ -55,9 +70,13 @@
                 </div>
             </div>
         </nav>
+
     {% endblock %}
 </h5>
 {% block content %}
 {% endblock %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>
 </html>

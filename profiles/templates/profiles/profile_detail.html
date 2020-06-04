@@ -4,9 +4,146 @@
 
 {% block content %}
 
-    {{ profile.user }}
-    <p>{% user_display user %}</p>
-    <img src="{% url  %}" alt="">
-    <p>{{ profile.messenger }}</p>
-    <img src="/media/messengers/telegram-app.png" alt="">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="card-title mb-4">
+                            <div class="d-flex justify-content-start">
+                                <div class="image-container">
+                                    <img src="{{ profile.avatar.url }}" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail">
+                                    <div class="middle">
+                                    </div>
+                                </div>
+                                <div class="userData ml-3">
+                                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="javascript:void(0);">{{ profile.nickname }}</a></h2>
+                                    <h6 class="d-block"> Зарегистрирован {{ profile.date_joined }}</h6>
+                                    <h6 class="d-block">{{ profile.review_set.count }} отзывов оставлено</h6>
+                                </div>
+                                <div class="ml-auto">
+                                    <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="Discard Changes">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">Информация</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="connectedServices-tab" data-toggle="tab" href="#connectedServices" role="tab" aria-controls="connectedServices" aria-selected="false">Обьявления</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content ml-1" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
+
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Логин</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                {{ profile.username }}
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">E-mail</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                {{ profile.email }}
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Имя</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                {{ profile.first_name }}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Фамилия</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                {{ profile.last_name }}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Телефон</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <img src="/{{ profile.messenger }}" width="20" height="20" alt="">
+                                                {{ profile.contact_phone }}
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Ссылка для связи</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                {{ profile.contact_link }}
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">О себе</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                Something
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                            <a  class="nav-item nav-link ml-auto text-white" href="{% url 'profile_update' pk=profile.pk %}">Редактировать</a>
+                                        </button>
+                                    </div>
+                                    <div class="tab-pane fade" id="connectedServices" role="tabpanel" aria-labelledby="ConnectedServices-tab">
+                                        {% for advert in adverts %}
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">
+                                                        <a href="{% url 'detail' pk=advert.pk %} }">{{ advert.title }}</a>
+                                                    </label>
+                                                </div>
+                                                <div class="col">
+                                                    <a>{{ advert.advert_category }}</a>
+                                                </div>
+                                                <div class="col">
+                                                    <a>{{ advert.platform }}</a>
+                                                </div>
+                                                <div class="col">
+                                                    <a>{{ advert.price }}</a>
+                                                </div>
+                                                <div class="col">
+                                                    <a>{{ advert.published}}</a>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -7,6 +7,7 @@ from .models import Advert, Review
 
 
 class AdvertForm(ModelForm):
+    """Form to add adverts on board"""
     class Meta:
         model = Advert
         fields = (
@@ -26,6 +27,7 @@ class AdvertForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        """Submit button to accept form data and create Advert object"""
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'post'
@@ -33,6 +35,7 @@ class AdvertForm(ModelForm):
 
 
 class ReviewForm(ModelForm):
+    """Review form which takes and validates data from POST request"""
     class Meta:
         model = Review
         fields = ('user', 'advert', 'text')

@@ -4,6 +4,10 @@ from phone_field import PhoneField
 
 
 class UserProfile(User):
+    """
+    Profile model inherited from User model
+    with additional fields.
+    """
     user = models.OneToOneField(
         User,
         verbose_name='Пользователь',
@@ -20,12 +24,15 @@ class UserProfile(User):
         'Мессенджер',
         max_length=250,
         choices=MESSENGER_CHOICES,
-        blank=True,
-        null=True
+        blank=True
+    )
+    avatar = models.ImageField(
+        'Аватар',
+        upload_to='profile/',
+        default='profile/default_profile.png'
     )
     nickname = models.CharField('Отображаемое имя', max_length=16)
-    avatar = models.ImageField('Аватар', upload_to='profile/')
-    about = models.TextField('О себе', max_length=250, blank=True, null=True)
+    about = models.TextField('О себе', max_length=250, blank=True)
     contact_phone = PhoneField('Телефон для связи', blank=True, null=True)
     contact_link = models.URLField('Ссылка для связи', blank=True, null=True)
 

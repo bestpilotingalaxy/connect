@@ -1,5 +1,6 @@
 {% extends 'layout/base.html' %}
 {% load bootstrap_pagination %}
+
 {% block content %}
     <div class="row">
         <div class="col-sm-3 mr-auto border">
@@ -55,13 +56,18 @@
                         </div>
                     </div>
             {% endfor %}
-            <div class="container mt-5">
-                <div class="container mx-auto">
+            <div class="text-xs-center">
+                <div class="paginator">
                     {% bootstrap_paginate page_obj %}
                 </div>
             </div>
         </div>
         <div class="col-sm-3 mr-auto">
+        </div>
+        <div class="row">
+            <div class="col mx-auto">
+                {% bootstrap_paginate page_obj %}
+            </div>
         </div>
     </div>
 
