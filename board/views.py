@@ -12,14 +12,11 @@ from .models import Advert, Platform, ContentType, AdvertCategory, Review
 
 class ExtraContextMixin:
     """Methods to get extra context from views and templates"""
-    def get_advert_category(self):
-        return AdvertCategory.objects.all()
-
-    def get_content_type(self):
-        return ContentType.objects.all()
-
-    def get_platforms(self):
-        return Platform.objects.all()
+    extra_context = {
+        'platforms': Platform.objects.all(),
+        'advert_categories': AdvertCategory.objects.all(),
+        'content_types': ContentType.objects.all()
+    }
 
 
 class AdvertList(ExtraContextMixin, ListView):
@@ -41,7 +38,7 @@ class AdvertByPlatformView(ExtraContextMixin, ListView):
             platform__name=self.kwargs['platform_name'])
 
 
-class AdvertAddView(ExtraContextMixin, LoginRequiredMixin, CreateView):
+class AdvertAddView(LoginRequiredMixin, CreateView):
     """Form view to add new advert object"""
     login_url = 'account_login'
 
@@ -51,7 +48,7 @@ class AdvertAddView(ExtraContextMixin, LoginRequiredMixin, CreateView):
     success_url = '/board'
 
 
-class AdvertUpdateView(ExtraContextMixin, UpdateView):
+class AdvertUpdateView(UpdateView):
     """Update advert object and redirect to detail page"""
     model = Advert
     form_class = AdvertForm
@@ -62,7 +59,7 @@ class AdvertUpdateView(ExtraContextMixin, UpdateView):
         return reverse('detail', kwargs={'pk': self.kwargs.get('pk')})
 
 
-class AdvertDeleteView(ExtraContextMixin, DeleteView):
+class AdvertDeleteView(DeleteView):
     """Form view to delete advert"""
     model = Advert
     success_url = '/board'

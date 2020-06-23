@@ -31,7 +31,7 @@
                     <a class="nav-item nav-link active" href="{% url 'main' %}">Home <span class="sr-only">(current)</span></a>
                 </div>
                     <div class="navbar-nav mx-auto">
-                        {% for platform in view.get_platforms %}
+                        {% for platform in platforms %}
                             <a class="nav-item nav-link" href="{% url 'by_platform' platform.name %}">
                                 <img src="{{ platform.img.url }}" width="30" height="30" alt="">
                             </a>

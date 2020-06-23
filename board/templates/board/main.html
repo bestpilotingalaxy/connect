@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-3 mr-auto border">
+        <div class="col-sm-3 mr-auto">
             <div class="container p-4">
                 <form class="form-inline" action="{% url 'search' %}" method="get">
                     <input class="form-control col-sm-8 bg-dark text-white"  placeholder="Название" name="search" aria-label="Search">
@@ -12,7 +12,7 @@
             </div>
             <form action="{% url 'filter' %}" method="get">
                 <div class="container mt-3 pl-4">
-                    {% for category in view.get_advert_category %}
+                    {% for category in advert_categories %}
                         <div class="custom-control custom-checkbox ">
                             <h5>
                                 <input type="checkbox" class="custom-control-input" name="advert_category" value="{{ category.id }}" id="{{ category.id }}">
@@ -22,7 +22,7 @@
                     {% endfor %}
                 </div>
                 <div class="container mt-3 pl-4">
-                    {% for type in view.get_content_type %}
+                    {% for type in content_types %}
                         <div class="custom-control custom-checkbox ">
                             <h5>
                                 <input type="checkbox" class="custom-control-input" name="content_type" value="{{ type.pk }}" id="{{ type.pk }}">
