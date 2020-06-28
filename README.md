@@ -1,8 +1,9 @@
-Hellow!
+Hello!
 
-"Connect" is my first project, its website to help media people share their traffic, and sell/buy/exchange promotion.
+"Connect" is a webapp to help media-people share their traffic, and sell/buy/exchange promotion.
 Based of Django 3.0.5
 
+requirements.txt included, templates not finished for using
 
 Functionality:
 
@@ -17,5 +18,3 @@ Functionality:
 5.Realised filters by categories&types
 
 6.Search by title
-
-requirements.txt included, frontent dont ready for using
